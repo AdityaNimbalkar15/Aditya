@@ -523,7 +523,7 @@
     const res = await fetch("https://api.cohere.ai/v1/generate", {
       method: "POST",
       headers: {
-        "Authorization": "Bearer YOUR_COHERE_API_KEY",
+        "Authorization": "zXH8KUSA3ncfZcxvIAZx5boAlGlTirN6LJmp706Q",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ model: "command", max_tokens: 50, temperature: 0.9, prompt })
@@ -535,8 +535,8 @@
 
     const form = new URLSearchParams();
     form.append("template_id", templateId);
-    form.append("username", "YOUR_IMGFLIP_USERNAME");
-    form.append("password", "YOUR_IMGFLIP_PASSWORD");
+    form.append("username", "SHANTNUTALOKAR");
+    form.append("password", "Sahil@9043");
     form.append("text0", text0);
     form.append("text1", text1);
     const imgRes = await fetch("https://api.imgflip.com/caption_image", { method: "POST", body: form });
