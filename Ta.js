@@ -1,41 +1,41 @@
-// ====================================================
-// 🔌 Sentiment-Analysis Integration  (NEW block)
-// ====================================================
-(async () => {
-  const API = "http://localhost:8000";
+// // ====================================================
+// // 🔌 Sentiment-Analysis Integration  (NEW block)
+// // ====================================================
+// (async () => {
+//   const API = "http://localhost:8000";
 
-  try {
-    // 1  Launch the Python backend (no-op if already running)
-    await fetch(API + "/start", { method: "POST" });
+//   try {
+//     // 1  Launch the Python backend (no-op if already running)
+//     await fetch(API + "/start", { method: "POST" });
 
-    // 2  Poll /latest every second and log to console
-    let running = true;
-    async function poll() {
-      if (!running) return;
-      try {
-        const res  = await fetch(API + "/latest");
-        const data = await res.json();
-        console.clear();
-        console.table(data);
-      } catch (_) {
-        console.warn("Waiting for sentiment data…");
-      }
-      setTimeout(poll, 1000);
-    }
-    poll();
+//     // 2  Poll /latest every second and log to console
+//     let running = true;
+//     async function poll() {
+//       if (!running) return;
+//       try {
+//         const res  = await fetch(API + "/latest");
+//         const data = await res.json();
+//         console.clear();
+//         console.table(data);
+//       } catch (_) {
+//         console.warn("Waiting for sentiment data…");
+//       }
+//       setTimeout(poll, 1000);
+//     }
+//     poll();
 
-    // 3  Press Esc anywhere to stop analysis
-    window.addEventListener("keydown", async (e) => {
-      if (e.key === "Escape") {
-        running = false;
-        await fetch(API + "/stop", { method: "POST" });
-        console.log("Emotion monitor stopped.");
-      }
-    });
-  } catch (err) {
-    console.error("⚠️ Sentiment-analysis API unreachable:", err);
-  }
-})();
+//     // 3  Press Esc anywhere to stop analysis
+//     window.addEventListener("keydown", async (e) => {
+//       if (e.key === "Escape") {
+//         running = false;
+//         await fetch(API + "/stop", { method: "POST" });
+//         console.log("Emotion monitor stopped.");
+//       }
+//     });
+//   } catch (err) {
+//     console.error("⚠️ Sentiment-analysis API unreachable:", err);
+//   }
+// })();
 
 // ====================================================
 // ✅ Udemy AI Bookmarklet Tool – ENHANCED UI VERSION
