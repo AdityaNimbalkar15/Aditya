@@ -83,11 +83,24 @@
       background: ${palette.primary};
       border-radius: 3px;
     }
-    #udemyQuizOverlay h2 {
-      color: ${palette.warning};
-      font-size: 24px;
-      margin-bottom: 20px;
+      #udemyQuizOverlay {
+     background: url('https://cdn-icons-png.flaticon.com/512/29/29302.png') no-repeat top 40px center;
+     background-color: #f2f8ff;
+     background-size: 100px;
+     background-blend-mode: lighten;
+     font-family: 'Segoe UI', 'Inter', sans-serif;
+     color: #333;
     }
+
+   #udemyQuizOverlay h2 {
+    color: #444;
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 130px;
+    margin-bottom: 20px;
+    text-align: center;
+   }
+
     #udemyQuizOverlay::-webkit-scrollbar {
       width: 6px;
     }
@@ -95,6 +108,27 @@
       background: ${palette.warning};
       border-radius: 3px;
     }
+      #quizForm b {
+  font-size: 18px;
+  color: #333;
+}
+
+#quizForm label {
+  font-size: 15px;
+  background-color: #fff;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+#quizForm label:hover {
+  border-color: #007bff;
+}
+
+   #scoreBox {
+   margin-top: 20px;
+   font-size: 22px;
+  color: #2c3e50;
+}
+
     .btn-hover:hover {
       filter: brightness(0.92);
     }
@@ -149,7 +183,7 @@
       btn.style.bottom = "auto";
       btn.style.right = "auto";
       panel.style.left = parseInt(btn.style.left) + "px";
-      panel.style.top  = parseInt(btn.style.top ) - 670 + "px";
+      panel.style.top = parseInt(btn.style.top) - 670 + "px";
     }
     document.addEventListener("mousemove", mm);
     btn.onmouseup = () => {
@@ -166,11 +200,11 @@
       return;
     }
 
-    const url   = location.href;
+    const url = location.href;
     const title = document.querySelector("h1")?.innerText || "Untitled Course";
 
     // ——— Cohere setup ———
-    const apiKey   = "zXH8KUSA3ncfZcxvIAZx5boAlGlTirN6LJmp706Q";
+    const apiKey = "zXH8KUSA3ncfZcxvIAZx5boAlGlTirN6LJmp706Q";
     const endpoint = "https://api.cohere.ai/v1/generate";
     const cohereQuery = async (prompt, max = 400) => {
       const res = await fetch(endpoint, {
