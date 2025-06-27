@@ -331,11 +331,12 @@
   if (typeof tool === 'function') tool();
 
   // Add Meme Button
+    // ✅ Add Meme Button – INSIDE MAIN TOOL
   const memeBtn = document.createElement('button');
   memeBtn.textContent = '🎭 Show Me a Meme';
   memeBtn.style.cssText = `
     position: fixed;
-    bottom: 150px;
+    bottom: 90px;
     right: 20px;
     z-index: 9999;
     padding: 10px 15px;
@@ -361,13 +362,13 @@
     const res = await fetch("https://api.cohere.ai/v1/generate", {
       method: "POST",
       headers: {
-        "Authorization": "zXH8KUSA3ncfZcxvIAZx5boAlGlTirN6LJmp706Q",
+        "Authorization": "Bearer zXH8KUSA3ncfZcxvIAZx5boAlGlTirN6LJmp706Q",  // ✅ Use your actual key
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ model: "command", max_tokens: 50, temperature: 0.9, prompt })
     });
     const data = await res.json();
-    const lines = data.generations[0].text.split('\n');
+    const lines = data.generations?.[0]?.text?.split('\n') || [];
     const text0 = lines.find(l => l.startsWith("Top:"))?.replace("Top:", "").trim() || "Debugging for hours";
     const text1 = lines.find(l => l.startsWith("Bottom:"))?.replace("Bottom:", "").trim() || "Turns out it was a typo 😭";
 
