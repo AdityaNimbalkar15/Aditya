@@ -1,41 +1,41 @@
 // ====================================================
 // 🔌 Sentiment-Analysis Integration  (NEW block)
 // ====================================================
-(async () => {
-  const API = "http://localhost:8000";
+// (async () => {
+//   const API = "http://localhost:8000";
 
-  try {
-    // 1  Launch the Python backend (no-op if already running)
-    await fetch(API + "/start", { method: "POST" });
+//   try {
+//     // 1  Launch the Python backend (no-op if already running)
+//     await fetch(API + "/start", { method: "POST" });
 
-    // 2  Poll /latest every second and log to console
-    let running = true;
-    async function poll() {
-      if (!running) return;
-      try {
-        const res  = await fetch(API + "/latest");
-        const data = await res.json();
-        console.clear();
-        console.table(data);
-      } catch (_) {
-        console.warn("Waiting for sentiment data…");
-      }
-      setTimeout(poll, 1000);
-    }
-    poll();
+//     // 2  Poll /latest every second and log to console
+//     let running = true;
+//     async function poll() {
+//       if (!running) return;
+//       try {
+//         const res  = await fetch(API + "/latest");
+//         const data = await res.json();
+//         console.clear();
+//         console.table(data);
+//       } catch (_) {
+//         console.warn("Waiting for sentiment data…");
+//       }
+//       setTimeout(poll, 1000);
+//     }
+//     poll();
 
-    // 3  Press Esc anywhere to stop analysis
-    window.addEventListener("keydown", async (e) => {
-      if (e.key === "Escape") {
-        running = false;
-        await fetch(API + "/stop", { method: "POST" });
-        console.log("Emotion monitor stopped.");
-      }
-    });
-  } catch (err) {
-    console.error("⚠️ Sentiment-analysis API unreachable:", err);
-  }
-})();
+//     // 3  Press Esc anywhere to stop analysis
+//     window.addEventListener("keydown", async (e) => {
+//       if (e.key === "Escape") {
+//         running = false;
+//         await fetch(API + "/stop", { method: "POST" });
+//         console.log("Emotion monitor stopped.");
+//       }
+//     });
+//   } catch (err) {
+//     console.error("⚠️ Sentiment-analysis API unreachable:", err);
+//   }
+// })();
 
 // ====================================================
 // ✅ Udemy AI Bookmarklet Tool – ORIGINAL (unchanged)
@@ -335,7 +335,7 @@
   memeBtn.textContent = '🎭 Show Me a Meme';
   memeBtn.style.cssText = `
     position: fixed;
-    bottom: 80px;
+    bottom: 150px;
     right: 20px;
     z-index: 9999;
     padding: 10px 15px;
@@ -361,7 +361,7 @@
     const res = await fetch("https://api.cohere.ai/v1/generate", {
       method: "POST",
       headers: {
-        "Authorization": "Bearer YOUR_COHERE_API_KEY",
+        "Authorization": "zXH8KUSA3ncfZcxvIAZx5boAlGlTirN6LJmp706Q",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ model: "command", max_tokens: 50, temperature: 0.9, prompt })
@@ -373,8 +373,8 @@
 
     const form = new URLSearchParams();
     form.append("template_id", templateId);
-    form.append("username", "YOUR_IMGFLIP_USERNAME");
-    form.append("password", "YOUR_IMGFLIP_PASSWORD");
+    form.append("username", "SHANTNUTALOKAR");
+    form.append("password", "Sahil@9043");
     form.append("text0", text0);
     form.append("text1", text1);
     const imgRes = await fetch("https://api.imgflip.com/caption_image", { method: "POST", body: form });
