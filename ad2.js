@@ -49,7 +49,9 @@
       { kws: ["state", "redux", "context", "hooks"],    id: "181913649" }, // Woman yelling at cat
     ];
     const tLower = topic.toLowerCase();
-    const templateId = (mappings.find(m => m.kws.some(k => tLower.includes(k))) || {}).id || "438680"; // default Batman slap
+    const templates = ["112126428", "131087935", ..., "148909805"];
+    const getRandomTemplate = () => templates[Math.floor(Math.random() * templates.length)];
+ 
 
     // ── 3. Ask Cohere for funny captions ─────────────────────────────
     const prompt = `You're a meme caption writer. Make a funny meme about: "${topic}".\nFormat:\nTop: <text>\nBottom: <text>`;
