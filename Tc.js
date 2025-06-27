@@ -460,3 +460,107 @@
   // ——— Finally, attach the launcher ———
   document.body.appendChild(btn);
 })();
+
+(function () {
+  if (document.getElementById("udemyAnalyzerBtn")) return;
+  if (!location.hostname.includes("udemy.com")) return alert("⚠️ Open this on a Udemy course page.");
+
+  const palette = {
+    primary: "#007BFF",
+    primaryDark: "#0056d2",
+    success: "#2ecc71",
+    successDark: "#27ae60",
+    warning: "#ffc107",
+    danger: "#e74c3c",
+    surface: "#ffffff",
+    text: "#2c3e50",
+    border: "#e0e0e0"
+  };
+
+  const style = document.createElement("style");
+  style.textContent = `
+    #udemyAnalyzerBtn:hover {
+      transform: translateY(-4px) scale(1.06);
+      box-shadow: 0 14px 30px rgba(0,0,0,.25);
+    }
+    #udemyAnalyzerBtn:active {
+      transform: translateY(0) scale(.97);
+      box-shadow: 0 6px 18px rgba(0,0,0,.25);
+    }
+    .btn-hover:hover {
+      filter: brightness(0.92);
+    }
+  `;
+  document.head.appendChild(style);
+
+  const memeBtn = document.createElement('button');
+  memeBtn.textContent = '🎭 Show Me a Meme';
+  memeBtn.style.cssText = `
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    z-index: 9999;
+    padding: 10px 15px;
+    background: #2c2c2c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  `;
+  memeBtn.onclick = async () => {
+    const topic = JSON.parse(localStorage.getItem("cohereTopics"))?.[0] || "debugging code";
+    const mappings = [
+      { keywords: ["error", "debug", "fail", "exception"], id: "112126428" },
+      { keywords: ["css", "frontend", "style", "ui"], id: "131087935" },
+      { keywords: ["api", "backend", "server", "request"], id: "87743020" },
+      { keywords: ["state", "redux", "context", "hooks"], id: "181913649" },
+    ];
+    const templateId = mappings.find(m => m.keywords.some(k => topic.toLowerCase().includes(k)))?.id || "438680";
+
+    const prompt = `You're a meme caption writer. Write a funny meme (top and bottom text) about: "${topic}".\nFormat:\nTop: <text>\nBottom: <text>`;
+    const res = await fetch("https://api.cohere.ai/v1/generate", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer YOUR_COHERE_API_KEY",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ model: "command", max_tokens: 50, temperature: 0.9, prompt })
+    });
+    const data = await res.json();
+    const lines = data.generations[0].text.split('\n');
+    const text0 = lines.find(l => l.startsWith("Top:"))?.replace("Top:", "").trim() || "Debugging for hours";
+    const text1 = lines.find(l => l.startsWith("Bottom:"))?.replace("Bottom:", "").trim() || "Turns out it was a typo 😭";
+
+    const form = new URLSearchParams();
+    form.append("template_id", templateId);
+    form.append("username", "YOUR_IMGFLIP_USERNAME");
+    form.append("password", "YOUR_IMGFLIP_PASSWORD");
+    form.append("text0", text0);
+    form.append("text1", text1);
+    const imgRes = await fetch("https://api.imgflip.com/caption_image", { method: "POST", body: form });
+    const memeData = await imgRes.json();
+    if (!memeData.success) return alert("❌ Failed to generate meme.");
+
+    const memeBox = document.createElement('div');
+    memeBox.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10000;
+      background: white;
+      padding: 10px;
+      border: 2px solid black;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    `;
+    memeBox.innerHTML = `
+      <div><strong>🎉 Meme Unlocked:</strong></div>
+      <img src="${memeData.data.url}" style="max-width:250px;margin-top:10px;" />
+      <div><button onclick="this.parentElement.parentElement.remove()" style="margin-top:10px;">Close</button></div>
+    `;
+    document.body.appendChild(memeBox);
+  };
+  document.body.appendChild(memeBtn);
+})();
