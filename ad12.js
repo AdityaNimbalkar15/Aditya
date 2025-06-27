@@ -67,7 +67,7 @@
   `;
 
   memeBtn.onclick = async () => {
-    const topic = JSON.parse(localStorage.getItem("cohereTopics"))?.[0] || "debugging code";
+    const topic = document.querySelector("h1").textContent.trim();
     const prompt = `You're a meme caption writer. Make a funny meme about: "${topic}".\nFormat:\nTop: <text>\nBottom: <text>`;
     const resp = await fetch("https://api.cohere.ai/v1/generate", {
       method: "POST",
